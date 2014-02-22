@@ -1,0 +1,97 @@
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 300;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 25px;
+}
+
+#recipes {
+  margin-top: 5em;
+  margin-bottom: 2em;
+}
+
+.recipe-list-item {
+  height: 4em;
+}
+
+.edit {
+  float: right;
+}
+
+.remove {
+  float: right; 
+  margin-left: 0.5em;
+}
+
+.show-recipe {
+  cursor: pointer;
+}
+
+.fullscreen {
+	display: block;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999998;
+  -webkit-transition: all 0.2s ease-out;
+     -moz-transition: all 0.2s ease-out;
+      -ms-transition: all 0.2s ease-out;
+       -o-transition: all 0.2s ease-out;
+          transition: all 0.2s ease-out;
+    background-color: #fff;
+}
+
+.controlPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-top: 2em;
+  padding-right: 2em;
+}
+
+#edit_recipe textarea {
+  padding: 20px !important;
+  padding-top: 30px !important;
+  border: none !important;
+  -webkit-box-sizing: border-box !important;
+     -moz-box-sizing: border-box !important;
+          box-sizing: border-box !important;
+  max-width: 900px !important;
+  height: 100% !important;
+  width: 100% !important;
+  outline: none !important;
+  margin: 0 auto !important;
+  display: block !important;
+  font-size: 20px !important;
+  box-shadow: none !important;
+  resize: none !important;
+  line-height: 1.6em !important;
+}
+
+#recipe-display {
+  margin-bottom: 2em;
+  margin-top: 1em;
+}
+
+#show-recipe {
+  overflow: scroll;
+}
+
+#recipe-display img {
+  float: right;
+  margin: 1em;
+
+  -moz-box-shadow: 0 0 5px #888;
+  -webkit-box-shadow: 0 0 5px#888;
+  box-shadow: 0 0 5px #888;
+}
+

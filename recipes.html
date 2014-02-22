@@ -1,0 +1,85 @@
+<head>
+  <title>Recept</title>
+
+  <link rel="stylesheet" type="text/css" href="static/widearea.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <p class="navbar-brand">Recept</p>
+      </div>
+      <div class="collapse navbar-collapse">
+        <div class="navbar-form navbar-left">
+          <button type="submit" class="btn btn-default" id="add">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          <button class="btn btn-default{{editing_active}}" id="turn_editing_on">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        </div>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+  {{> recipes}}
+  {{#if editing_recipe}}
+    {{> edit_recipe}}
+  {{/if}}
+  {{#if showing_recipe}}
+    {{> show_recipe}}
+  {{/if}}
+</template>
+
+<template name="recipes">
+  <div id="recipes" class="list-group container" role="main">
+    {{#each recipes}}
+    <a class="show-recipe list-group-item recipe-list-item">
+      {{title}}
+      {{#if edit_list}}
+      <button class="remove btn btn-default" style="position: relative;right:0">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+      <button class="edit btn btn-default" style="position: relative;right:0">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      {{/if}}
+    </a>
+    {{/each}}
+  </div>
+</template>
+
+<template name="show_recipe">
+  <div id="show-recipe" class="fullscreen">
+    <div class="container" id="recipe-display">
+      {{#markdown}}{{content}}{{/markdown}}
+    </div>
+
+    <div class="controlPanel">
+      <button id="close" class="btn btn-default"> <span class="glyphicon glyphicon-th-list"></span></button>
+    </div>
+  </div>
+</template>
+
+<template name="edit_recipe">
+  <div id="edit_recipe" class="fullscreen">
+    <textarea id="recipe_content_input" data-widearea="enable">{{content}}</textarea>
+    <div class="controlPanel">
+      <button id="save" class="btn btn-success">Spara</button>
+      <button id="cancel" class="btn btn-default">Avbryt</button>
+    </div>
+  </div>
+</template>
+
