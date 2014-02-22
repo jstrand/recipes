@@ -11,11 +11,6 @@ if (Meteor.isClient) {
   }
 
   Template.main.showing_recipe = function() {
-    console.log('showing_recipe')
-    console.log(Session.get('recipe'))
-    console.log(Session.get('showing_recipe'))
-    console.log(Session.get('recipe') != null && Session.get('showing_recipe'))
-
     return Session.get('recipe') != null && Session.get('showing_recipe')
   }
 
@@ -36,7 +31,7 @@ if (Meteor.isClient) {
   }
 
   Template.recipes.recipes = function() {
-    return Recipes.find({});
+    return Recipes.find({deleted: {$ne: true}});
   }
 
   Template.recipes.edit_list = function() {
@@ -62,13 +57,11 @@ if (Meteor.isClient) {
   Template.recipes.events = {
     
     'click .show-recipe': function(evt) {
-      console.log('show-recipe')
       Session.set('recipe', this)
       Session.set('showing_recipe', true)
     },
 
     'click .edit': function(evt) {
-      console.log('edit')
       Session.set('recipe', this)
       Session.set('new_recipe', false)
 
@@ -76,8 +69,7 @@ if (Meteor.isClient) {
     },
 
     'click .remove': function(evt) {
-      console.log('remove')
-      Recipes.remove(this._id)
+      Recipes.update(this._id, {$set: {deleted: true}})
 
       evt.stopPropagation()
     }
@@ -96,19 +88,24 @@ if (Meteor.isClient) {
 
     'click #save': function(evt) {
 
-      entered_value = {content: $('#recipe_content_input').val()}
+      var entered_value = $('#recipe_content_input').val()
 
       if (Session.get('new_recipe')) {
-        Recipes.insert(entered_value)
+        Recipes.insert({content: entered_value})
       }
       else {
-        Recipes.update(Session.get('recipe')._id, entered_value)
+        var old_id = Session.get('recipe')._id
+
+        Recipes.insert({content: entered_value, replaces: old_id})
+        // If it was an edit, mark the old recipe deleted
+        Recipes.update(old_id, {$set: {deleted: true}})
       }
       Session.set('recipe', null)
     },
 
     'click #cancel': function(evt) {
-      Session.set('recipe', null);
+      Session.set('recipe', null)
+      Session.set('new_recipe', false)
     }
   }
 
