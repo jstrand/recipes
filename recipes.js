@@ -5,6 +5,7 @@ if (Meteor.isClient) {
   Session.setDefault('edit_list', false)
   Session.setDefault('recipe', null)
   Session.setDefault('showing_recipe', false)
+  Session.setDefault('deleting', null)
 
   Template.main.editing_recipe = function() {
     return Session.get('recipe') != null && !Session.get('showing_recipe')
@@ -54,6 +55,10 @@ if (Meteor.isClient) {
     return matches[1]
   }
 
+  Template.recipes.confirm_deletion = function() {
+    return Session.get('deleting') == this._id
+  }
+
   Template.recipes.events = {
     
     'click .show-recipe': function(evt) {
@@ -69,7 +74,13 @@ if (Meteor.isClient) {
     },
 
     'click .remove': function(evt) {
-      Recipes.update(this._id, {$set: {deleted: true}})
+      if (Session.get('deleting') == this._id) {
+        Recipes.update(this._id, {$set: {deleted: true}})
+        Session.set('deleting', null)
+      }
+      else {
+        Session.set('deleting', this._id)
+      }
 
       evt.stopPropagation()
     }

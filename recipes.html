@@ -49,10 +49,11 @@
     <a class="show-recipe list-group-item recipe-list-item">
       {{title}}
       {{#if edit_list}}
-      <button class="remove btn btn-default" style="position: relative;right:0">
+      <button class="remove btn btn-default{{#if confirm_deletion}} btn-danger{{/if}}">
         <span class="glyphicon glyphicon-trash"></span>
+        {{#if confirm_deletion}}Säker?{{/if}}
       </button>
-      <button class="edit btn btn-default" style="position: relative;right:0">
+      <button class="edit btn btn-default">
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
       {{/if}}
